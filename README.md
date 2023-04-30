@@ -16,6 +16,7 @@ Using git to track your commits and your IDE and test framework of choice, imple
 - We create an android application based on the apis created and build a basic UI to handle the different scenarios(parentLogin, childLogin etc)
 - We use Jetpack Compose & MVVM Design pattern for the View Layer and Repository Pattern for the Data Layer 
 - For only when a child is allowed login through the parent, i.e child logged in through parent we use an HTTP Authorization header e.g. `Authorization: Bearer <auth-token>` for the api call
+- Given more time I would have covered few more scenarios and written down the unit tests
 
 
 # Installation
