@@ -72,10 +72,10 @@ It is the UI part that represents the current state of information that is visib
 
 # Getting the data from the below apis
   
-    parentLogin - /login
-    childLogin - /login
-    parent loggin in child - /login/student/
-    child login using parent token - /loginchildtoken/
+    parentLogin(/login) - enable parent login using username and password
+    childLogin( /login) - enable child login using username and password
+    parent loggin in child(/login/student/) - enable parent to login child
+    child login using parent token(/loginchildtoken/) - enable the logged in child(from parent) to login using id and token w/o using username and password
 
 
 # Screenshots
