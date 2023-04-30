@@ -9,6 +9,14 @@ Using git to track your commits and your IDE and test framework of choice, imple
 4. Parent can logout
 5. Child can logout, either leaving an active parent session or no sessions 
 
+# Approach
+- We first setup a POSTMAN collection with the given request and response to create the different api's for parentLogin, childLogin, logging in child through parent and logging in the child without username and password.
+- The postman collection has exmaples of the request and response which the apis need to emulate.
+- There are scripts written inside the postman collection for token storage
+- We create an android application based on the apis created and build a basic UI to handle the different scenarios(parentLogin, childLogin etc)
+- We use Jetpack Compose & MVVM Design pattern for the View Layer and Repository Pattern for the Data Layer 
+- For only when a child is allowed login through the parent, i.e child logged in through parent we use an HTTP Authorization header e.g. `Authorization: Bearer <auth-token>` for the api call
+
 
 # Installation
 Clone the repo and install the dependencies.
@@ -54,6 +62,9 @@ We set up a view model factory which is responsible for creating view models.It 
 
 # Coroutines
 Coroutines are a great way to write asynchronous code that is perfectly readable and maintainable. We use it to perform a job of requesting data from the api.
+
+# Local Storage using SharedPreferences
+We have used Sharedpreferences to locally store the tokens for parent and child
 
 # View
 It is the UI part that represents the current state of information that is visible to the user.We are setting up the UI using Jetpack Compose
