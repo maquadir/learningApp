@@ -37,6 +37,20 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun childLoginUsingToken(student_id: String, parent_token: String) {
+        viewModelScope.launch(Dispatchers.Main) {
+            try {
+                val repos =
+                    withContext(Dispatchers.IO) {
+                       repository.childLoginToken(student_id, parent_token)
+                    }
+                updateState(repos.body())
+            } catch (e: Exception) {
+                updateErrorState(e)
+            }
+        }
+    }
+
     private fun updateErrorState(e: Exception) {
         errorMutableLiveData.value = e.message.toString()
     }

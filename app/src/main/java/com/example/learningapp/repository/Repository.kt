@@ -11,6 +11,9 @@ class Repository(private val apiService: ApiService) {
     suspend fun childLogin(bodyRequest: BodyRequest) =
         apiService.childLogin(bodyRequest, bodyRequest.username, bodyRequest.password)
 
-    suspend fun parentChildLogin(student_id:String) =
+    suspend fun parentChildLogin(student_id: String) =
         apiService.parentChildLogin(student_id)
+
+    suspend fun childLoginToken(student_id: String, parent_token: String) =
+        apiService.childLoginToken(student_id, parent_token)
 }

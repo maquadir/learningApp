@@ -33,7 +33,7 @@ interface ApiService {
     @POST("/loginchildtoken/")
     suspend fun childLoginToken(
         @Query("student_id") student_id: String,
-        @Query("auth_token") auth_token: String
+        @Query("auth_token") parent_token: String
     ): Response<Student>
 
     companion object {

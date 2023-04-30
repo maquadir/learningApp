@@ -90,16 +90,16 @@ class MainActivity : AppCompatActivity() {
     fun MainScreen() {
         val usernameValue = remember { mutableStateOf("example-parent") }
         val passwordValue = remember { mutableStateOf("1234") }
-        val visible = remember { mutableStateOf(true) }
+        val isFieldsVisible = remember { mutableStateOf(true) }
         val isStudent = remember { mutableStateOf(false) }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            SwitchHeader(usernameValue, passwordValue, visible, isStudent)
-            UserCredentials(usernameValue, passwordValue, visible)
-            SignInButton(usernameValue, passwordValue, visible, isStudent)
+            SwitchHeader(usernameValue, passwordValue, isFieldsVisible, isStudent)
+            UserCredentials(usernameValue, passwordValue, isFieldsVisible)
+            SignInButton(usernameValue, passwordValue, isFieldsVisible, isStudent)
         }
     }
 
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
     fun SwitchHeader(
         usernameValue: MutableState<String>,
         passwordValue: MutableState<String>,
-        visible: MutableState<Boolean>,
+        isFieldsVisible: MutableState<Boolean>,
         isStudent: MutableState<Boolean>
     ) {
         val context = LocalContext.current
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                 color = androidx.compose.ui.graphics.Color.Gray
             )
             Switch(checked = isStudent.value, onCheckedChange = {
-               isStudent.value = it
+                isStudent.value = it
 
                 //set credentials
                 usernameValue.value =
@@ -130,17 +130,18 @@ class MainActivity : AppCompatActivity() {
                 passwordValue.value =
                     getString(if (isStudent.value) R.string.student_password else R.string.parent_password)
 
-                //allow child to login without username and password if parent has logged in
+                //allow child to login without username and password if parent has logged in the child
+                //here we will hide the username and password text fields by setting a boolean
                 when {
                     isStudent.value -> {
                         val childData = context.getLoggedInChildData()
                         if (childData.studentId.isNotEmpty() && childData.authToken.isNotEmpty()) {
-                            visible.value = false
+                            isFieldsVisible.value = false
                         }
                     }
 
                     else -> {
-                        visible.value = true
+                        isFieldsVisible.value = true
                     }
                 }
             })
@@ -156,9 +157,9 @@ class MainActivity : AppCompatActivity() {
     fun UserCredentials(
         usernameValue: MutableState<String>,
         passwordValue: MutableState<String>,
-        visible: MutableState<Boolean>
+        isFieldsVisible: MutableState<Boolean>
     ) {
-        if (visible.value) {
+        if (isFieldsVisible.value) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
@@ -206,21 +207,27 @@ class MainActivity : AppCompatActivity() {
     fun SignInButton(
         usernameValue: MutableState<String>,
         passwordValue: MutableState<String>,
-        visible: MutableState<Boolean>,
+        isFieldsVisible: MutableState<Boolean>,
         isStudent: MutableState<Boolean>
     ) {
+        val context = LocalContext.current
         Button(
             onClick = {
+                val childData = context.getLoggedInChildData()
                 val body: BodyRequest =
                     BodyRequest(
                         usernameValue.value,
                         passwordValue.value
                     )
-                viewModel.login(isStudent.value, body)
+                if (isFieldsVisible.value)
+                    viewModel.login(isStudent.value, body)
+                else
+                    viewModel.childLoginUsingToken(childData.studentId, childData.authToken)
+
             }
         ) {
             Text(
-                text = stringResource(id = if (visible.value) R.string.sign_in else R.string.signed_in),
+                text = stringResource(id = if (isFieldsVisible.value) R.string.sign_in else R.string.signed_in),
                 color = androidx.compose.ui.graphics.Color.White
             )
         }
