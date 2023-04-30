@@ -229,7 +229,7 @@
 			]
 		},
 		{
-			"name": "login child through parent",
+			"name": "login child through parent token",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -265,7 +265,7 @@
 			},
 			"response": [
 				{
-					"name": "login child through parent",
+					"name": "login child through parent token",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
