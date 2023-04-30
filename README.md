@@ -74,7 +74,8 @@ Sign in as Parent and Sign in as Child
 
 
 Signing in as parent displays the student ids associated with the parent.
-Upon selecting one student - the student would be able to sign in without username and password
+Upon selecting one student - the student would be able to sign in without username and password.
+Upon logout both parent and child sessions will be logged out.
 
 <img width="219" alt="Screenshot 2023-04-30 at 12 34 37 pm" src="https://user-images.githubusercontent.com/19331629/235332847-24c621ee-640b-4e34-b970-77f0512168bd.png">. <img width="198" alt="Screenshot 2023-04-30 at 12 35 44 pm" src="https://user-images.githubusercontent.com/19331629/235332871-8f03f1c5-e9a9-4258-988f-003ce267afa4.png">. <img width="170" alt="Screenshot 2023-04-30 at 12 35 51 pm" src="https://user-images.githubusercontent.com/19331629/235332885-fa518224-9aba-4f71-aaf8-47518ba914ec.png">
 
