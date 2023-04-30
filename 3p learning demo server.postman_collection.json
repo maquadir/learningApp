@@ -1,0 +1,421 @@
+{
+	"info": {
+		"_postman_id": "cbf08b37-4aa1-4e72-a6a2-8ae90cddcd85",
+		"name": "3p learning demo server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4203098"
+	},
+	"item": [
+		{
+			"name": "parent login child",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"studentIdLoggedIn\", jsonData.user_id);",
+							"postman.setEnvironmentVariable(\"auth_token\", jsonData.auth_token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "parent_token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/login/student/?student_id={{student_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login",
+						"student",
+						""
+					],
+					"query": [
+						{
+							"key": "student_id",
+							"value": "{{student_id}}"
+						}
+					]
+				},
+				"description": "login as a parent"
+			},
+			"response": [
+				{
+					"name": "parent loggin in child",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login/student/?student_id={{student_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login",
+								"student",
+								""
+							],
+							"query": [
+								{
+									"key": "student_id",
+									"value": "{{student_id}}"
+								}
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"username\": \"example-student\",\n    \"user_id\": \"{{$queryParams 'student_id'}}\",\n    \"type\": \"student\",\n    \"auth_token\": \"qU0QV9ExRU+x7QrgpdYB3Q==\",\n    \"parent_id\": \"parent-1\"\n}"
+				}
+			]
+		},
+		{
+			"name": "login as parent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"parent_token\", jsonData.auth_token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{parent_username}}\",\n    \"password\": \"{{parent_password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/login?parent_username={{parent_username}}&parent_password={{parent_password}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "parent_username",
+							"value": "{{parent_username}}"
+						},
+						{
+							"key": "parent_password",
+							"value": "{{parent_password}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "login as parent",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{parent_username}}\",\n    \"password\": \"{{parent_password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login?parent_username={{parent_username}}&parent_password={{parent_password}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "parent_username",
+									"value": "{{parent_username}}"
+								},
+								{
+									"key": "parent_password",
+									"value": "{{parent_password}}"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"username\": \"{{$queryParams 'parent_username'}}\",\n    \"user_id\": \"parent-1\",\n    \"type\": \"parent\",\n    \"auth_token\": \"qU0QV9ExRU+x7QrgpdYB3Q==\",\n    \"student_ids\": [\n        \"student-1\",\n        \"student-2\",\n        \"student-3\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "login child through parent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\": \"{{studentId}}\",\n    \"auth_token\": \"{{token_variable}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/loginchildtoken/?student_id={{studentIdLoggedIn}}&auth_token={{auth_token}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loginchildtoken",
+						""
+					],
+					"query": [
+						{
+							"key": "student_id",
+							"value": "{{studentIdLoggedIn}}"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{auth_token}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "login child through parent",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"{{studentId}}\",\n    \"auth_token\": \"{{token_variable}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/loginchildtoken/?student_id={{studentIdLoggedIn}}&auth_token={{auth_token}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"loginchildtoken",
+								""
+							],
+							"query": [
+								{
+									"key": "student_id",
+									"value": "{{studentIdLoggedIn}}"
+								},
+								{
+									"key": "auth_token",
+									"value": "{{auth_token}}"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"username\": \"example-student\",\n    \"user_id\": \"{{$queryParams 'student_id'}}\",\n    \"type\": \"student\",\n    \"auth_token\": \"27xSPikKAk+fm/dKxq79PQ==\",\n    \"parent_id\": \"parent-1\"\n}"
+				}
+			]
+		},
+		{
+			"name": "login as child",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"child_token\", jsonData.auth_token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{child_username}}\",\n    \"password\": \"{{child_password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "html"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/login?child_username={{child_username}}&child_password={{child_password}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "child_username",
+							"value": "{{child_username}}"
+						},
+						{
+							"key": "child_password",
+							"value": "{{child_password}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "login as child",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{child_username}}\",\n    \"password\": \"{{child_password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "html"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/login?child_username={{child_username}}&child_password={{child_password}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "child_username",
+									"value": "{{child_username}}"
+								},
+								{
+									"key": "child_password",
+									"value": "{{child_password}}"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"username\": \"{{$queryParams 'child_username'}}\",\n    \"user_id\": \"student-1\",\n    \"type\": \"student\",\n    \"auth_token\": \"27xSPikKAk+fm/dKxq79PQ==\",\n    \"parent_id\": \"parent-1\"\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://18e2d77a-1039-4ecf-8f70-14bcbabf3e47.mock.pstmn.io"
+		}
+	]
+}
