@@ -1,6 +1,7 @@
 # learningApp
 
 # Introduction
+Using git to track your commits and your IDE and test framework of choice, implement the following Android application requirements:
 
 1. Parent can login themselves with username/password
 2. Parent can login their child without entering the child's username/password
@@ -12,9 +13,9 @@
 # Installation
 Clone the repo and install the dependencies.
 
-  https://github.com/maquadir/learningApp.git
+     https://github.com/maquadir/learningApp.git
   
-Architecture and Design
+# Architecture and Design
 The application follows an MVVM architecture as given below
 
 <img width="449" alt="Screen Shot 2019-12-25 at 8 05 55 AM" src="https://user-images.githubusercontent.com/19331629/71425127-6ca3cc00-26ed-11ea-98b5-a344b54b7050.png">
@@ -59,10 +60,10 @@ It is the UI part that represents the current state of information that is visib
 
 # Getting the data from the below apis
   
-  parentLogin - /login
-  childLogin - /login
-  parent loggin in child - /login/student/
-  child login using parent token - /loginchildtoken/
+    parentLogin - /login
+    childLogin - /login
+    parent loggin in child - /login/student/
+    child login using parent token - /loginchildtoken/
 
 
 # Screenshots
